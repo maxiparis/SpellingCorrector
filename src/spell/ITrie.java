@@ -30,8 +30,8 @@ public interface ITrie {
 
 	/**
 	 * Returns the number of unique words in the trie.
-	 * 
-	 * @return the number of unique words in the trie
+	 *
+	 * @return the number of unique words in the trie.
 	 */
 	int getWordCount();
 

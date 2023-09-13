@@ -7,7 +7,7 @@ import java.io.IOException;
  * If you think you need to modify this document for your code to work, your code will not pass the TA driver.
  * Your spell corrector class MUST implement the ISpellCorrector interface.
  * Your spell corrector class MUST be named "SpellCorrector" found in the file "SpellCorrector.java".
- * Your spell corrector class MUST be in the spell package.
+ * * Your spell corrector class MUST be in the spell package.
  */
 public interface ISpellCorrector {
 
@@ -27,5 +27,6 @@ public interface ISpellCorrector {
 	 * @param inputWord the word we are trying to find or find a suggestion for
 	 * @return the suggestion or null if there is no similar word in the dictionary
 	 */
+	@SuppressWarnings("checkstyle:LineLength")
 	String suggestSimilarWord(String inputWord);
 }

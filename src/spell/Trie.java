@@ -1,6 +1,10 @@
 package spell;
 
-public class Trie implements ITrie{
+public class Trie implements ITrie {
+  private Node root;
+  private int wordCount;
+  private int nodeCount;
+
   @Override
   public void add(String word) {
 
@@ -20,4 +24,12 @@ public class Trie implements ITrie{
   public int getNodeCount() {
     return 0;
   }
+
+
+//toString
+
+//Equals
+
+//HashCode
+
 }

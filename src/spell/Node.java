@@ -1,6 +1,10 @@
 package spell;
 
+import javax.management.NotificationFilter;
+
 public class Node implements INode{
+    private int count;
+    private Node[] children;
   @Override
   public int getValue() {
     return 0;
