@@ -8,17 +8,18 @@ public class Node implements INode{
   @Override
   public int getValue() {
 
-    return 0;
+    return count;
   } //returns the count
 
   @Override
   public void incrementValue() { //increment count
 
+    count++;
   }
 
   @Override
   public INode[] getChildren() {
 
-    return new INode[0];
+    return children;
   }
 }
