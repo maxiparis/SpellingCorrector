@@ -17,19 +17,22 @@ public class Main {
 //		String dictionaryFileName = args[0];
 //		String inputWord = args[1];
 
-		Node n = new Node();
-		n.incrementValue();
-		System.out.println("n.getValue() " + n.getValue());
-		n.getChildren()[4] = new Node();
-
 		Trie t = new Trie();
-		t.add("arm");
-		t.add("arms");
+		t.add("b");
+		t.add("c");
 
-		var a = t.find("frogs"); //null
-		var c = t.find("arm"); //found
-		var f = t.find("arms"); //found
-		var ar = t.find("ar"); //null
+
+
+		Trie t2 = new Trie();
+		t2.add("b");
+		t2.add("c");
+		t2.add("c");
+
+
+		Boolean test = t.equals(t2);
+
+
+		System.out.println(t.toString());
 
 
 

@@ -8,7 +8,7 @@ public class Trie implements ITrie {
     public Trie() {
         root = new Node();
         wordCount = 0;
-        nodeCount = 0;
+        nodeCount = 1; //root is one node
     }
 
     @Override
@@ -73,27 +73,7 @@ public class Trie implements ITrie {
         }
         return (INode) currentNode;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  @Override
+ @Override
   public int getWordCount() {
 	return wordCount;
   }
@@ -139,15 +119,27 @@ public class Trie implements ITrie {
 //Equals
   @Override
   public boolean equals(Object o){
-  //some cases to check
+    //some cases to check
     //is o == null? return false
     //is o == this? return true
     //do this and o have the same class?
-      //no? return false
-      //yes? keep going
-    Trie theOtherTrie = (Trie) o;
+        //no? return false
+        //yes? keep going
     //do this and at this point do wordCount and nodeCount are the same for theOtherTrie?
 
+    Trie theOtherTrie = (Trie) o;
+
+    if (o == null) {
+        return false;
+    } else if (o == this) {
+        return true;
+    } else if (!o.getClass().equals(this.getClass())) {
+        return false;
+    } else if (this.getWordCount() != theOtherTrie.getWordCount()) {
+        return false;
+    } else if (this.getNodeCount() != theOtherTrie.getNodeCount()) {
+        return false;
+    }
 
     return equalsHelper(this.root, theOtherTrie.root);
   }
@@ -158,6 +150,26 @@ public class Trie implements ITrie {
       //do n1 and n2 have non-null children in the same indexes?
     //recurse on the children and compare the children subtrees
 
+      if (n1.getValue() != n2.getValue()) {
+          return false;
+      }
+      int j = 0;
+      //2 options
+        //go to next one if all children are null
+        //traverse through all if there are at least one non-null
+      for (int i = 0; i < n1.getChildren().length; i++){
+          if (n1.getChildren()[i] != null){
+              for (;j < n2.getChildren().length; j++){ //make sure this part works
+                  if (n2.getChildren()[j] != null){
+                      if(i != j){//if they are not the same index, false
+                          return false;
+                      } else {
+                          return equalsHelper((Node) n1.getChildren()[i], (Node) n2.getChildren()[j]);
+                      }
+                  }
+              }
+          }
+      }
 
     return true; //if at any point there is any difference, return false
   }
