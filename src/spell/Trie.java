@@ -42,17 +42,65 @@ public class Trie implements ITrie {
 
     @Override
   public INode find(String word) {
-	return null;
+        String newWord = word.toLowerCase();
+        Node currentNode = this.root;
+        //traverse through each word, until i get to the last word
+        for(int i = 0; i < newWord.length(); i++){
+            char c = newWord.charAt(i);
+            int index = c - 'a';
+            if (currentNode.getChildren()[index] == null) {
+                return null;
+            } else {
+                //if I am in last position
+                    //if node.getCount > 0
+                        //return node
+                    //else
+                        //return null, because i came all the way but the count is 0, which means, there is no word there.
+                //else (i am not in the last position)
+                    //update currentNode to the child
+
+
+                if (i == newWord.length() - 1) {
+                    if (currentNode.getChildren()[index].getValue() > 0){
+                        return (INode) currentNode.getChildren()[index];
+                    } else {
+                        return null;
+                    }
+                } else {
+                    currentNode = (Node) currentNode.getChildren()[index];
+                }
+            }
+        }
+        return (INode) currentNode;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   @Override
   public int getWordCount() {
-	return 0;
+	return wordCount;
   }
 
   @Override
   public int getNodeCount() {
-	return 0;
+	return nodeCount;
   }
 
 

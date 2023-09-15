@@ -23,10 +23,14 @@ public class Main {
 		n.getChildren()[4] = new Node();
 
 		Trie t = new Trie();
-		t.add("FROG");
-		t.add("fRoGS");
-		t.add("fry");
-		t.add("fryier");
+		t.add("arm");
+		t.add("arms");
+
+		var a = t.find("frogs"); //null
+		var c = t.find("arm"); //found
+		var f = t.find("arms"); //found
+		var ar = t.find("ar"); //null
+
 
 
 		//
