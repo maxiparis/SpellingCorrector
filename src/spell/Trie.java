@@ -5,9 +5,15 @@ public class Trie implements ITrie {
   private int wordCount;
   private int nodeCount;
 
-  @Override
-  public void add(String word) {
+    public Trie() {
+        root = new Node();
+        wordCount = 0;
+        nodeCount = 0;
+    }
 
+    @Override
+  public void add(String word) {
+        String newWord = word.toLowerCase();
   }
 
   @Override

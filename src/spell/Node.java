@@ -7,6 +7,7 @@ public class Node implements INode{
     private Node[] children; //26 children
 
 
+
   public Node() {
     count = 0;
     children = new Node[26];

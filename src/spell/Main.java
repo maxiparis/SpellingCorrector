@@ -21,6 +21,13 @@ public class Main {
 		n.incrementValue();
 		System.out.println("n.getValue() " + n.getValue());
 		n.getChildren()[4] = new Node();
+
+		Trie t = new Trie();
+		t.add("sTaRt");
+		t.add("trucK");
+		t.add("EATING");
+
+
 		//
         //Create an instance of your corrector here
         //
