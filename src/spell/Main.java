@@ -14,21 +14,25 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		String dictionaryFileName = args[0];
-		String inputWord = args[1];
-		
+//		String dictionaryFileName = args[0];
+//		String inputWord = args[1];
+
+		Node n = new Node();
+		n.incrementValue();
+		System.out.println("n.getValue() " + n.getValue());
+		n.getChildren()[4] = new Node();
 		//
         //Create an instance of your corrector here
         //
 		ISpellCorrector corrector = null;
 		
-		corrector.useDictionary(dictionaryFileName);
-		String suggestion = corrector.suggestSimilarWord(inputWord);
-		if (suggestion == null) {
-		    suggestion = "No similar word found";
-		}
-		
-		System.out.println("Suggestion is: " + suggestion);
+//		corrector.useDictionary(dictionaryFileName);
+//		String suggestion = corrector.suggestSimilarWord(inputWord);
+//		if (suggestion == null) {
+//		    suggestion = "No similar word found";
+//		}
+//
+//		System.out.println("Suggestion is: " + suggestion);
 	}
 
 }
