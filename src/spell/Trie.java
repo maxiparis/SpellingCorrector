@@ -18,8 +18,11 @@ public class Trie implements ITrie {
         for (int i = 0; i < newWord.length(); i++){
             char c = newWord.charAt(i);
             int index = c - 'a';
-            currentNode.getChildren()[index] = new Node();
-            this.incrementNodeCount();
+
+            if (currentNode.getChildren()[index] == null){
+                currentNode.getChildren()[index] = new Node();
+                this.incrementNodeCount();
+            }
             currentNode = (Node) currentNode.getChildren()[index];
         }
         if (currentNode.getValue() == 0 ){
