@@ -23,9 +23,9 @@ public class Main {
 		n.getChildren()[4] = new Node();
 
 		Trie t = new Trie();
-		t.add("sTaRt");
-		t.add("trucK");
-		t.add("EATING");
+		t.add("FROG");
+		t.add("fRoGS");
+		t.add("fry");
 
 
 		//

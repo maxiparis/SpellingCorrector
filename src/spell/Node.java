@@ -3,7 +3,7 @@ package spell;
 import javax.management.NotificationFilter;
 
 public class Node implements INode{
-    private int count;
+    private int count; //frequency count for the word represented by the node
     private Node[] children; //26 children
 
 

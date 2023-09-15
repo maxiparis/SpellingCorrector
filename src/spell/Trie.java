@@ -14,9 +14,30 @@ public class Trie implements ITrie {
     @Override
   public void add(String word) {
         String newWord = word.toLowerCase();
+        Node currentNode = this.root;
+        for (int i = 0; i < newWord.length(); i++){
+            char c = newWord.charAt(i);
+            int index = c - 'a';
+            currentNode.getChildren()[index] = new Node();
+            this.incrementNodeCount();
+            currentNode = (Node) currentNode.getChildren()[index];
+        }
+        if (currentNode.getValue() == 0 ){
+            this.incrementWordCount();
+        }
+
+        currentNode.incrementValue();
   }
 
-  @Override
+    private void incrementWordCount() {
+        wordCount++;
+    }
+
+    private void incrementNodeCount() {
+        nodeCount++;
+    }
+
+    @Override
   public INode find(String word) {
 	return null;
   }
