@@ -16,42 +16,21 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-//		String dictionaryFileName = args[0];
-//		String inputWord = args[1];
-
-		Trie t1 = new Trie();
-		t1.add("ba");
-		t1.add("ba");
-		t1.add("a");
-		t1.add("a");
-		t1.add("c");
-		t1.add("z");
-
-		Trie t2 = new Trie();
-		t2.add("b");
-		t2.add("ba");
-		t2.add("c");
-		t2.add("c");
-
-		int t1H = t1.hashCode();
-		int t2H = t2.hashCode();
-
-		System.out.println(t1.toString());
-
-
+		String dictionaryFileName = args[0];
+		String inputWord = args[1];
 
 		//
         //Create an instance of your corrector here
         //
-		ISpellCorrector corrector = null;
+		ISpellCorrector corrector = new SpellCorrector();
 		
-//		corrector.useDictionary(dictionaryFileName);
-//		String suggestion = corrector.suggestSimilarWord(inputWord);
-//		if (suggestion == null) {
-//		    suggestion = "No similar word found";
-//		}
-//
-//		System.out.println("Suggestion is: " + suggestion);
+		corrector.useDictionary(dictionaryFileName);
+		String suggestion = corrector.suggestSimilarWord(inputWord);
+		if (suggestion == null) {
+		    suggestion = "No similar word found";
+		}
+
+		System.out.println("Suggestion is: " + suggestion);
 	}
 
 }

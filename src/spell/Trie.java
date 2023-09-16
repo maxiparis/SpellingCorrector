@@ -48,7 +48,7 @@ public class Trie implements ITrie {
     }
 
     @Override
-  public INode find(String word) {
+  public Node find(String word) {
         String newWord = word.toLowerCase();
         Node currentNode = this.root;
         //traverse through each word, until i get to the last word
@@ -69,7 +69,7 @@ public class Trie implements ITrie {
 
                 if (i == newWord.length() - 1) {
                     if (currentNode.getChildren()[index].getValue() > 0){
-                        return (INode) currentNode.getChildren()[index];
+                        return currentNode.getChildren()[index];
                     } else {
                         return null;
                     }
@@ -78,7 +78,7 @@ public class Trie implements ITrie {
                 }
             }
         }
-        return (INode) currentNode;
+        return currentNode;
   }
  @Override
   public int getWordCount() {
@@ -201,5 +201,12 @@ public class Trie implements ITrie {
 
         // if there is no non-null then just return this one below.
         return getNodeCount() * getWordCount(); //for example
+    }
+
+    public boolean isWordInDictionary(String inputWord) {
+        if (this.find(inputWord) == null){
+            return false;
+        }
+        return true;
     }
 }
