@@ -19,7 +19,10 @@ public class Main {
 
 		Trie t = new Trie();
 		t.add("b");
+		t.add("a");
+		t.add("a");
 		t.add("c");
+		t.add("z");
 
 
 

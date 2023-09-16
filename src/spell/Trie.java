@@ -21,6 +21,7 @@ public class Trie implements ITrie {
 
             if (currentNode.getChildren()[index] == null){
                 currentNode.getChildren()[index] = new Node();
+                currentNode.getNodesPosition()[index] = 1;
                 this.incrementNodeCount();
             }
             currentNode = (Node) currentNode.getChildren()[index];
@@ -150,9 +151,22 @@ public class Trie implements ITrie {
       //do n1 and n2 have non-null children in the same indexes?
     //recurse on the children and compare the children subtrees
 
-      if (n1.getValue() != n2.getValue()) {
+
+      //PRE CHECK CASES
+      if ((n1 == null & n2 != null) || (n1 != null & n2 == null)) {//is it one null and the other not?
+          return false;
+      } else if (n1.getValue() != n2.getValue()) {//do they have different values?
+          return false;
+      } else if (){ //do both nodes have children in same positions. yes = continue, no = ret false
           return false;
       }
+
+
+
+
+
+
+
       int j = 0;
       //2 options
         //go to next one if all children are null
