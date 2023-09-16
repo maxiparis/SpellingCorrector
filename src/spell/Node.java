@@ -42,7 +42,7 @@ public class Node implements INode{
   }
 
   @Override
-  public INode[] getChildren() {
+  public Node[] getChildren() {
 
     return children;
   }

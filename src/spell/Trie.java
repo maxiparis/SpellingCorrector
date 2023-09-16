@@ -1,5 +1,7 @@
 package spell;
 
+import java.util.Arrays;
+
 public class Trie implements ITrie {
   private Node root;
   private int wordCount;
@@ -9,6 +11,10 @@ public class Trie implements ITrie {
         root = new Node();
         wordCount = 0;
         nodeCount = 1; //root is one node
+    }
+
+    public Node getRoot() {
+        return root;
     }
 
     @Override
@@ -147,6 +153,7 @@ public class Trie implements ITrie {
 
   private boolean equalsHelper(Node n1, Node n2){//to traverse both trees at the same time
     //compare n1 and n2 to see if they are the same
+      //do any n1 or n2 is null and the other not? yes -> false
       //do n1 and n2 have the same count? yes continue, no -> false
       //do n1 and n2 have non-null children in the same indexes?
     //recurse on the children and compare the children subtrees
@@ -157,30 +164,16 @@ public class Trie implements ITrie {
           return false;
       } else if (n1.getValue() != n2.getValue()) {//do they have different values?
           return false;
-      } else if (){ //do both nodes have children in same positions. yes = continue, no = ret false
+      } else if (!Arrays.equals(n1.getNodesPosition(), n2.getNodesPosition())){ //do both nodes have children in same positions. yes = continue, no = ret false
           return false;
       }
 
-
-
-
-
-
-
-      int j = 0;
-      //2 options
-        //go to next one if all children are null
-        //traverse through all if there are at least one non-null
-      for (int i = 0; i < n1.getChildren().length; i++){
-          if (n1.getChildren()[i] != null){
-              for (;j < n2.getChildren().length; j++){ //make sure this part works
-                  if (n2.getChildren()[j] != null){
-                      if(i != j){//if they are not the same index, false
-                          return false;
-                      } else {
-                          return equalsHelper((Node) n1.getChildren()[i], (Node) n2.getChildren()[j]);
-                      }
-                  }
+      for (int i = 0 ; i < n1.getChildren().length; i++){ //traverse through all non-null children
+          Node childN1=n1.getChildren()[i];
+          Node childN2=n2.getChildren()[i];
+          if (childN1 != null){ //only one child because i know we have childs in same position
+              if(!equalsHelper(childN1, childN2)){
+                  return false;
               }
           }
       }

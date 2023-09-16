@@ -1,6 +1,8 @@
 package spell;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * A simple main class for running the spelling corrector. This class is not
@@ -17,25 +19,29 @@ public class Main {
 //		String dictionaryFileName = args[0];
 //		String inputWord = args[1];
 
-		Trie t = new Trie();
-		t.add("b");
-		t.add("a");
-		t.add("a");
-		t.add("c");
-		t.add("z");
+		Trie t1 = new Trie();
+		t1.add("ba");
+		t1.add("ba");
+		t1.add("a");
+		t1.add("a");
+		t1.add("c");
+		t1.add("z");
+
 
 
 
 		Trie t2 = new Trie();
 		t2.add("b");
+		t2.add("ba");
 		t2.add("c");
 		t2.add("c");
 
+		Boolean test = Arrays.equals(t1.getRoot().getChildren()[1].getNodesPosition(), t2.getRoot().getChildren()[1].getNodesPosition());
+		//expecting true
+		Boolean test2 = t1.equals(t2);
 
-		Boolean test = t.equals(t2);
 
-
-		System.out.println(t.toString());
+		System.out.println(t1.toString());
 
 
 
