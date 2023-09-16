@@ -183,12 +183,23 @@ public class Trie implements ITrie {
 
 //HashCode
   @Override
-  public int hashCode(){
+    public int hashCode(){
+        //Another thing to do, combine the following numbers:
+        //1. nodeCount
+        //2. wordCount
+        //3. the index of each non-null child (combine somehow - add, multiply them, etc)
 
-    return getNodeCount() * getWordCount(); //for example
-    //Another thing to do, combine the following numbers:
-      //1. nodeCount
-      //2. wordCount
-      //3. the index of each non-null child (combine somehow - add, multiply them, etc)
-  }
+
+        //taking the index of the first non-null node after the char #15
+         int nonNullIndex = 0;
+         for (int i = 15 ; i < 26 ; i++){
+             if(this.root.getChildren()[i] != null){
+                 nonNullIndex = i;
+                 return getNodeCount() * getWordCount() * nonNullIndex;
+             }
+         }
+
+        // if there is no non-null then just return this one below.
+        return getNodeCount() * getWordCount(); //for example
+    }
 }

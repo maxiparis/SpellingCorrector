@@ -27,19 +27,14 @@ public class Main {
 		t1.add("c");
 		t1.add("z");
 
-
-
-
 		Trie t2 = new Trie();
 		t2.add("b");
 		t2.add("ba");
 		t2.add("c");
 		t2.add("c");
 
-		Boolean test = Arrays.equals(t1.getRoot().getChildren()[1].getNodesPosition(), t2.getRoot().getChildren()[1].getNodesPosition());
-		//expecting true
-		Boolean test2 = t1.equals(t2);
-
+		int t1H = t1.hashCode();
+		int t2H = t2.hashCode();
 
 		System.out.println(t1.toString());
 
