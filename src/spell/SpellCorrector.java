@@ -7,11 +7,9 @@ import java.util.*;
 
 public class SpellCorrector implements ISpellCorrector{
     private Trie myTrie;
-    private HashSet<String> editDistance1;
 
   public SpellCorrector() {
     myTrie = new Trie();
-    editDistance1 = new HashSet<String>();
   }
 
   @Override
@@ -37,52 +35,115 @@ public class SpellCorrector implements ISpellCorrector{
         //check if word is in trie
         if (myTrie.isWordInDictionary(inputWord)) { //if the word is in the trie, then return that word.
             return inputWord.toLowerCase();
-        } else { //word was not in dictionary, generate different words that can be used to test possible mispellings
-            //Edit Distance 1
-            editDistance1.addAll(deletion(inputWord));
-            editDistance1.addAll(transposition(inputWord));
-            editDistance1.addAll(alteration(inputWord));
-            editDistance1.addAll(insertion(inputWord));
-
-            // check if words in ED1 are in trie
-            int frequencies = 0;
-            Map <Integer, String> words = new HashMap<>();
-
-            for (String aWord : editDistance1){
-                Node node = myTrie.find(aWord);
-                //if the word.count is higher than frequencies
-                    //update frequencies
-                    //clear map
-                    //add the map
-                    //
-                //if not, do nothing
-                if(node != null){ //we actually found a word
-                    if (node.getValue() > frequencies){ // if is higher
-                        frequencies = node.getValue();
-                        words.clear();
-                        words.put(node.getValue(), aWord);
-                    } else if (node.getValue() == frequencies) { //if is the same frequency
-                        words.put(node.getValue(), aWord);
-                    } // if is smaller, do nothing.
-                }
-            }
-
-            //if there is one winner, return it
-            //else if there is tie, use tiebrakers to do so
-            //else if is empty (it )
-
-            if (words.size() == 1){
-                return words.get(frequencies);
-            } else if (words.size() > 1) { //there is a tie
-                
-            }
-
-
         }
+
+        //word was not in dictionary, generate different words that can be used to test possible mispellings
+        HashSet<String> editDistance1 = new HashSet<String>();
+
+
+    //Edit Distance 1
+        editDistance1 = doAll4Modifications(inputWord);
+
+        // check if words in ED1 are in trie
+//        TreeMap<String, Integer> words = new TreeMap<>();
+        TreeMap<String, Integer> wordsFoundInED1 = lookUpEditDistanceSetInTrie(editDistance1);
+
+        //if there is one winner, return it
+        //else if there is tie, use tiebrakers to do so
+        //else if is empty (it )
+
+        if (wordsFoundInED1.size() == 1){
+            return wordsFoundInED1.firstKey();
+        } else if (wordsFoundInED1.size() > 1) { //there is a tie
+            return wordsFoundInED1.firstKey();
+        } //is smaller than 1, which is at least 0, so there was no match
+
+
+
+
+
+    //EditDistance2
+        //for each word in editDistance1, COMPUTE all 4 of the modifications
+        HashSet<String> editDistance2 = new HashSet<String>();
+
+        for (String aWord : editDistance1){
+            editDistance2.addAll(doAll4Modifications(aWord));
+        }
+
+
+        int frequencies2 = 0;
+        TreeMap<String, Integer> words2 = new TreeMap<>();
+
+        //see if the words in ED2 are in the tree (dictionary)
+        for (String aWord : editDistance2){
+            Node node = myTrie.find(aWord);
+            //if the word.count is higher than frequencies
+                //update frequencies
+                //clear map
+                //add the map
+            //if not, do nothing
+            if(node != null){ //we actually found a word
+                if (node.getValue() > frequencies2){ // if is higher
+                    frequencies2 = node.getValue();
+                    words2.clear();
+                    words2.put(aWord, node.getValue());
+                } else if (node.getValue() == frequencies2) { //if is the same frequency
+                    words2.put(aWord, node.getValue());
+                } // if is smaller, do nothing.
+            }
+        }
+
+        //If there is one word in that TreeMap, return that one
+        //if there are more than 1 word in the TreeMap, return the first one alphabetically
+        //if there is not, return null
+        if (words2.size() == 1){
+            return words2.firstKey();
+        } else if (words2.size() > 1) { //there is a tie
+            return words2.firstKey();
+        } //is smaller than 1, which is at least 0, so there was no match
+
+
 
 
         return null;
   }
+
+    private TreeMap<String, Integer> lookUpEditDistanceSetInTrie(HashSet<String> editDistance1) {
+        TreeMap<String, Integer> foundWordsInTrie = new TreeMap<>();
+
+        int frequencies = 0;
+        for (String aWord : editDistance1){
+            Node node = myTrie.find(aWord);
+            //if the word.count is higher than frequencies
+            //update frequencies
+            //clear map
+            //add the map
+            //
+            //if not, do nothing
+            if(node != null){ //we actually found a word
+                if (node.getValue() > frequencies){ // if is higher
+                    frequencies = node.getValue();
+                    foundWordsInTrie.clear();
+                    foundWordsInTrie.put(aWord, node.getValue());
+                } else if (node.getValue() == frequencies) { //if is the same frequency
+                    foundWordsInTrie.put(aWord, node.getValue());
+                } // if is smaller, do nothing.
+            }
+        }
+
+        return foundWordsInTrie;
+    }
+
+    private HashSet<String> doAll4Modifications(String aWord) {
+        HashSet<String> toReturn = new HashSet<>();
+        toReturn.addAll(deletion(aWord));
+        toReturn.addAll(transposition(aWord));
+        toReturn.addAll(alteration(aWord));
+        toReturn.addAll(insertion(aWord));
+
+        return toReturn;
+    }
+
 
     private HashSet<String> insertion(String inputWord) {
         HashSet<String> toReturn= new HashSet<String>();
