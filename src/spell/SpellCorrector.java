@@ -70,36 +70,17 @@ public class SpellCorrector implements ISpellCorrector{
             editDistance2.addAll(doAll4Modifications(aWord));
         }
 
-
-        int frequencies2 = 0;
-        TreeMap<String, Integer> words2 = new TreeMap<>();
-
         //see if the words in ED2 are in the tree (dictionary)
-        for (String aWord : editDistance2){
-            Node node = myTrie.find(aWord);
-            //if the word.count is higher than frequencies
-                //update frequencies
-                //clear map
-                //add the map
-            //if not, do nothing
-            if(node != null){ //we actually found a word
-                if (node.getValue() > frequencies2){ // if is higher
-                    frequencies2 = node.getValue();
-                    words2.clear();
-                    words2.put(aWord, node.getValue());
-                } else if (node.getValue() == frequencies2) { //if is the same frequency
-                    words2.put(aWord, node.getValue());
-                } // if is smaller, do nothing.
-            }
-        }
+        TreeMap<String, Integer> wordsFoundInED2 = lookUpEditDistanceSetInTrie(editDistance2);
+
 
         //If there is one word in that TreeMap, return that one
         //if there are more than 1 word in the TreeMap, return the first one alphabetically
         //if there is not, return null
-        if (words2.size() == 1){
-            return words2.firstKey();
-        } else if (words2.size() > 1) { //there is a tie
-            return words2.firstKey();
+        if (wordsFoundInED2.size() == 1){
+            return wordsFoundInED2.firstKey();
+        } else if (wordsFoundInED2.size() > 1) { //there is a tie
+            return wordsFoundInED2.firstKey();
         } //is smaller than 1, which is at least 0, so there was no match
 
 
