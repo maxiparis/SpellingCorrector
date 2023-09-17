@@ -33,6 +33,9 @@ public class SpellCorrector implements ISpellCorrector{
 @Override
   public String suggestSimilarWord(String inputWord) {
         //check if word is in trie
+        if (inputWord == "") {
+            return null;
+        }
         if (myTrie.isWordInDictionary(inputWord)) { //if the word is in the trie, then return that word.
             return inputWord.toLowerCase();
         }
@@ -118,10 +121,9 @@ public class SpellCorrector implements ISpellCorrector{
     private HashSet<String> doAll4Modifications(String aWord) {
         HashSet<String> toReturn = new HashSet<>();
         toReturn.addAll(deletion(aWord));
+        toReturn.addAll(insertion(aWord));
         toReturn.addAll(transposition(aWord));
         toReturn.addAll(alteration(aWord));
-        toReturn.addAll(insertion(aWord));
-
         return toReturn;
     }
 
@@ -170,6 +172,9 @@ public class SpellCorrector implements ISpellCorrector{
 
     private HashSet<String> deletion(String inputWord) {
         HashSet<String> toReturn= new HashSet<String>();
+        if(inputWord.length() == 1){
+            return toReturn;
+        }
         for (int i = 0; i < inputWord.length(); i++) {
             String modifiedWord = "";
             for (int j=0; j < inputWord.length(); j++) {
