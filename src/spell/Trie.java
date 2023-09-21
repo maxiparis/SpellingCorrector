@@ -25,12 +25,13 @@ public class Trie implements ITrie {
             char c = newWord.charAt(i);
             int index = c - 'a';
 
+
             if (currentNode.getChildren()[index] == null){
                 currentNode.getChildren()[index] = new Node();
                 currentNode.getNodesPosition()[index] = 1;
                 this.incrementNodeCount();
             }
-            currentNode = (Node) currentNode.getChildren()[index];
+            currentNode = currentNode.getChildren()[index];
         }
         if (currentNode.getValue() == 0 ){
             this.incrementWordCount();
@@ -120,7 +121,6 @@ public class Trie implements ITrie {
         curWord.deleteCharAt(curWord.length() - 1);
 	  }
 	}
-
   }
 
 //Equals
@@ -189,12 +189,12 @@ public class Trie implements ITrie {
         //2. wordCount
         //3. the index of each non-null child (combine somehow - add, multiply them, etc)
 
-
         //taking the index of the first non-null node after the char #15
          int nonNullIndex = 0;
-         for (int i = 15 ; i < 26 ; i++){
+         for (int i = 0 ; i < 26 ; i++){
              if(this.root.getChildren()[i] != null){
                  nonNullIndex = i;
+
                  return getNodeCount() * getWordCount() * nonNullIndex;
              }
          }

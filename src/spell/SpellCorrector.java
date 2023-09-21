@@ -16,10 +16,8 @@ public class SpellCorrector implements ISpellCorrector{
   public void useDictionary(String dictionaryFileName) throws IOException {
       try {
           File inputText = new File(dictionaryFileName); //create a text file
-          Scanner input = new Scanner(inputText); // craete a scanner using the text
-//          while (input.hasNextLine()) {
-//              myTrie.add(input.nextLine());
-//          }
+          Scanner input = new Scanner(inputText); // create a scanner using the text
+
           while (input.hasNext()) {
               myTrie.add(input.next());
           }
@@ -49,20 +47,15 @@ public class SpellCorrector implements ISpellCorrector{
 
         // check if words in ED1 are in trie
 //        TreeMap<String, Integer> words = new TreeMap<>();
-        TreeMap<String, Integer> wordsFoundInED1 = lookUpEditDistanceSetInTrie(editDistance1);
+        TreeSet<String> wordsFoundInED1=lookUpEditDistanceSetInTrie(editDistance1);
 
         //if there is one winner, return it
         //else if there is tie, use tiebrakers to do so
         //else if is empty (it )
 
-        if (wordsFoundInED1.size() == 1){
-            return wordsFoundInED1.firstKey();
-        } else if (wordsFoundInED1.size() > 1) { //there is a tie
-            return wordsFoundInED1.firstKey();
-        } //is smaller than 1, which is at least 0, so there was no match
-
-
-
+        if (wordsFoundInED1.size() >= 1){
+            return wordsFoundInED1.first();
+        }
 
 
     //EditDistance2
@@ -74,17 +67,15 @@ public class SpellCorrector implements ISpellCorrector{
         }
 
         //see if the words in ED2 are in the tree (dictionary)
-        TreeMap<String, Integer> wordsFoundInED2 = lookUpEditDistanceSetInTrie(editDistance2);
+        TreeSet<String> wordsFoundInED2 = lookUpEditDistanceSetInTrie(editDistance2);
 
 
         //If there is one word in that TreeMap, return that one
         //if there are more than 1 word in the TreeMap, return the first one alphabetically
         //if there is not, return null
-        if (wordsFoundInED2.size() == 1){
-            return wordsFoundInED2.firstKey();
-        } else if (wordsFoundInED2.size() > 1) { //there is a tie
-            return wordsFoundInED2.firstKey();
-        } //is smaller than 1, which is at least 0, so there was no match
+        if (wordsFoundInED2.size() >= 1){
+            return wordsFoundInED2.first();
+        }
 
 
 
@@ -92,8 +83,8 @@ public class SpellCorrector implements ISpellCorrector{
         return null;
   }
 
-    private TreeMap<String, Integer> lookUpEditDistanceSetInTrie(HashSet<String> editDistance1) {
-        TreeMap<String, Integer> foundWordsInTrie = new TreeMap<>();
+    private TreeSet<String> lookUpEditDistanceSetInTrie(HashSet<String> editDistance1) {
+        TreeSet<String> foundWordsInTrie = new TreeSet<>();
 
         int frequencies = 0;
         for (String aWord : editDistance1){
@@ -108,9 +99,9 @@ public class SpellCorrector implements ISpellCorrector{
                 if (node.getValue() > frequencies){ // if is higher
                     frequencies = node.getValue();
                     foundWordsInTrie.clear();
-                    foundWordsInTrie.put(aWord, node.getValue());
+                    foundWordsInTrie.add(aWord);
                 } else if (node.getValue() == frequencies) { //if is the same frequency
-                    foundWordsInTrie.put(aWord, node.getValue());
+                    foundWordsInTrie.add(aWord);
                 } // if is smaller, do nothing.
             }
         }
@@ -146,7 +137,7 @@ public class SpellCorrector implements ISpellCorrector{
         for (int i = 0; i < inputWord.length(); i++) {
             for (int j=0; j < 26; j++) {
                 StringBuilder modifiedWord = new StringBuilder(inputWord);
-                char alphabetChar =(char)('a' + j);
+                char alphabetChar = (char)('a' + j);
                 modifiedWord.replace(i, i+1, Character.toString(alphabetChar));
                 if (modifiedWord.toString() != inputWord) {
                     toReturn.add(modifiedWord.toString());
@@ -162,7 +153,7 @@ public class SpellCorrector implements ISpellCorrector{
         StringBuilder modifiedWord;
         for (int i=0; i < inputWord.length()-1; i++) {
             modifiedWord = new StringBuilder(inputWord); // i = 1 , HOUSE
-            StringBuilder get2Chars = new StringBuilder(modifiedWord.subSequence(i, i+2)); //OU
+            StringBuilder get2Chars = new StringBuilder(modifiedWord.substring(i, i+2)); //OU
             get2Chars.reverse(); // UO
             modifiedWord.replace(i, i+2, get2Chars.toString()); // HUOSE
             toReturn.add(modifiedWord.toString());
